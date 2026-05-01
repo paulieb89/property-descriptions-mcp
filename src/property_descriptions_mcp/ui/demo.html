@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>BOUCH PROPERTY — Data-grounded listing descriptions</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --charcoal: #1C1917;
+      --orange: #D97757;
+      --cream: #FAF9F5;
+      --cream2: #f4f1ea;
+      --border: rgba(28, 25, 23, 0.14);
+      --mono: "Space Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --display: "Bebas Neue", ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--cream);
+      color: var(--charcoal);
+      font-family: var(--mono);
+    }
+
+    a { color: inherit; text-decoration: none; }
+
+    .container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 20px 16px 60px;
+    }
+
+    header {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-size: 26px;
+      letter-spacing: 0.06em;
+    }
+
+    nav {
+      display: flex;
+      gap: 14px;
+      font-size: 12px;
+      opacity: 0.75;
+    }
+
+    .hero {
+      padding: 26px 0 18px;
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 16px;
+    }
+
+    .hero h1 {
+      margin: 0;
+      font-family: var(--display);
+      font-size: 44px;
+      letter-spacing: 0.02em;
+      line-height: 0.95;
+    }
+
+    .hero p {
+      margin: 0;
+      font-size: 14px;
+      line-height: 1.6;
+      max-width: 68ch;
+      opacity: 0.85;
+    }
+
+    .cta-row {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+      padding-top: 6px;
+    }
+
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      padding: 10px 12px;
+      font-size: 12px;
+      background: var(--cream);
+    }
+
+    .btn.primary {
+      border-left: 3px solid var(--orange);
+      padding-left: 10px;
+      background: var(--cream2);
+    }
+
+    section {
+      padding: 22px 0;
+      border-top: 1px solid var(--border);
+    }
+
+    section h2 {
+      margin: 0 0 10px 0;
+      font-family: var(--display);
+      font-size: 26px;
+      letter-spacing: 0.04em;
+    }
+
+    .grid2 {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 560px) {
+      .grid2 {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 14px;
+    }
+
+    .label {
+      font-size: 12px;
+      opacity: 0.7;
+      margin-bottom: 6px;
+    }
+
+    .sample {
+      white-space: pre-wrap;
+      font-size: 13px;
+      line-height: 1.6;
+    }
+
+    .steps {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+    }
+
+    @media (min-width: 760px) {
+      .steps {
+        grid-template-columns: 1fr 1fr 1fr;
+      }
+    }
+
+    .step {
+      border: 1px solid var(--border);
+      padding: 14px;
+      border-left: 3px solid var(--orange);
+      background: var(--cream2);
+    }
+
+    form {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      max-width: 520px;
+    }
+
+    input, button {
+      font-family: var(--mono);
+      border: 1px solid var(--border);
+      background: var(--cream);
+      padding: 10px 12px;
+      font-size: 12px;
+      border-radius: 0;
+    }
+
+    button {
+      cursor: pointer;
+      border-left: 3px solid var(--orange);
+      padding-left: 10px;
+      background: var(--cream2);
+    }
+
+    footer {
+      padding-top: 20px;
+      opacity: 0.75;
+      font-size: 12px;
+    }
+
+    .muted { opacity: 0.75; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div class="logo">BOUCH PROPERTY</div>
+      <nav>
+        <a href="#how">How it works</a>
+        <a href="#sample">Sample output</a>
+        <a href="#early">Early access</a>
+      </nav>
+    </header>
+
+    <div class="hero">
+      <h1>Listing descriptions grounded in real market data.</h1>
+      <p>
+        This MCP server gives your AI assistant comparable sales, EPC info, current listings,
+        and location context for any UK postcode — then generates three tone variants and
+        portal-ready formats.
+      </p>
+      <div class="cta-row">
+        <a class="btn primary" href="#early">Get early access</a>
+        <a class="btn" href="/mcp">Connect via MCP at /mcp</a>
+      </div>
+    </div>
+
+    <section id="beforeafter">
+      <h2>Before / After</h2>
+      <div class="grid2">
+        <div class="card">
+          <div class="label">Before (generic)</div>
+          <div class="sample">A well presented three bedroom property in a popular location close to amenities and transport links. Viewing recommended.</div>
+        </div>
+        <div class="card">
+          <div class="label">After (data-grounded)</div>
+          <div class="sample">A three-bedroom home positioned with walkable access to local shops and commuter routes. Comparable sales on nearby streets over the last 24 months cluster in a tight band, placing the asking price competitively. EPC information supports a practical view on running costs and efficiency — ideal for buyers comparing like-for-like.</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="how">
+      <h2>How it works</h2>
+      <div class="steps">
+        <div class="step">
+          <div class="label">Step 1</div>
+          Provide an address + postcode (and price/bedrooms if known).
+        </div>
+        <div class="step">
+          <div class="label">Step 2</div>
+          Your AI calls tools to fetch comps, EPC, listings, and location context.
+        </div>
+        <div class="step">
+          <div class="label">Step 3</div>
+          You get three description variants + portal formats ready to paste.
+        </div>
+      </div>
+    </section>
+
+    <section id="sample">
+      <h2>Sample output</h2>
+      <div class="card">
+        <div class="label">Example property (placeholder — replace with your real samples)</div>
+        <div class="sample"><strong>ADDRESS:</strong> [Your sample address]
+<strong>POSTCODE:</strong> [Your sample postcode]
+<strong>DETAILS:</strong> [Bedrooms + type] • £[Asking price]
+
+<strong>Professional</strong>
+Headline: [Professional headline]
+Description: [150–200 words]
+Features:
+- [Feature]
+- [Feature]
+
+<strong>Luxury</strong>
+Headline: [Luxury headline]
+Description: [150–200 words]
+Features:
+- [Feature]
+- [Feature]
+
+<strong>Family-friendly</strong>
+Headline: [Family headline]
+Description: [150–200 words]
+Features:
+- [Feature]
+- [Feature]
+
+<strong>Portal formats</strong>
+Rightmove summary (≤300 chars): [Summary]
+Social caption: [Caption]
+Email subject (≤60 chars): [Subject]
+Portal bullet points:
+- [Bullet]
+- [Bullet]</div>
+      </div>
+    </section>
+
+    <section id="video">
+      <h2>Video</h2>
+      <div class="card muted">Loom embed placeholder — add your recording when ready.</div>
+    </section>
+
+    <section id="early">
+      <h2>Get early access</h2>
+      <p class="muted">Google Form integration included with placeholders. Replace FORM_ID and entry.FIELD_N when ready.</p>
+      <form action="https://docs.google.com/forms/d/e/FORM_ID/formResponse" method="POST" target="hidden_iframe">
+        <input name="entry.FIELD_1" type="text" placeholder="Your name" required>
+        <input name="entry.FIELD_2" type="email" placeholder="Email address" required>
+        <input name="entry.FIELD_3" type="text" placeholder="Agency name (optional)">
+        <button type="submit">Get early access</button>
+      </form>
+      <iframe name="hidden_iframe" style="display:none;"></iframe>
+    </section>
+
+    <footer>
+      Built by <a href="https://bouch.dev" target="_blank" rel="noreferrer">BOUCH</a>. Connect via MCP at <span class="muted">/mcp</span>.
+    </footer>
+  </div>
+</body>
+</html>

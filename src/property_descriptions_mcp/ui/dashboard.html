@@ -1,0 +1,540 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Property Descriptions</title>
+  <style>
+    :root {
+      --surface: var(--color-background-primary, #FAF9F5);
+      --surface-alt: var(--color-background-secondary, #f4f1ea);
+      --text: var(--color-text-primary, #1C1917);
+      --text-muted: var(--color-text-secondary, rgba(28, 25, 23, 0.6));
+      --border: var(--color-border-primary, rgba(28, 25, 23, 0.12));
+      --accent: var(--color-accent, #D97757);
+      --mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace;
+      --sans: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji", "Segoe UI Emoji";
+    }
+
+    html, body {
+      margin: 0;
+      padding: 0;
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--sans);
+    }
+
+    .wrap {
+      padding: 16px;
+    }
+
+    .topbar {
+      display: flex;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 12px;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .title {
+      font-family: var(--mono);
+      font-size: 14px;
+      letter-spacing: 0.02em;
+      text-transform: uppercase;
+    }
+
+    .status {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 12px;
+    }
+
+    @media (min-width: 900px) {
+      .grid {
+        grid-template-columns: 1fr 1fr;
+      }
+    }
+
+    .card {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 12px;
+    }
+
+    .card h2 {
+      margin: 0 0 10px 0;
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .kv {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 8px 12px;
+      font-family: var(--mono);
+      font-size: 12px;
+      line-height: 1.4;
+    }
+
+    .kv .k {
+      color: var(--text-muted);
+    }
+
+    .sep {
+      height: 1px;
+      background: var(--border);
+      margin: 12px 0;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-bottom: 10px;
+    }
+
+    .tab {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .tab[aria-selected="true"] {
+      border-left: 3px solid var(--accent);
+      padding-left: 8px;
+      background: var(--surface-alt);
+    }
+
+    .section {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      padding: 12px;
+      margin-bottom: 12px;
+    }
+
+    .section-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 8px;
+    }
+
+    .section-title {
+      font-family: var(--mono);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      color: var(--text-muted);
+    }
+
+    .btn {
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 6px 10px;
+      cursor: pointer;
+    }
+
+    .btn:hover {
+      background: var(--surface-alt);
+    }
+
+    .text {
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.55;
+      white-space: pre-wrap;
+    }
+
+    ul {
+      margin: 8px 0 0 0;
+      padding-left: 18px;
+      font-family: var(--sans);
+      font-size: 14px;
+      line-height: 1.5;
+    }
+
+    .small {
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--border);
+      font-family: var(--mono);
+      font-size: 12px;
+      padding: 2px 6px;
+      margin-left: 8px;
+      color: var(--text-muted);
+    }
+
+    .loading {
+      border-left: 3px solid var(--accent);
+      padding: 10px 12px;
+      border-top: 1px solid var(--border);
+      border-right: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: var(--surface-alt);
+      font-family: var(--mono);
+      font-size: 12px;
+      color: var(--text-muted);
+      margin-bottom: 12px;
+      display: none;
+    }
+
+    .muted {
+      color: var(--text-muted);
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <div class="topbar">
+      <div class="title">Property Descriptions Dashboard</div>
+      <div id="status" class="status">Waiting for tool results…</div>
+    </div>
+
+    <div id="loading" class="loading">Loading…</div>
+
+    <div id="propertyData"></div>
+
+    <div id="descriptions"></div>
+  </div>
+
+  <script type="module">
+    import {
+      App,
+      applyDocumentTheme,
+      applyHostFonts,
+      applyHostStyleVariables,
+    } from "https://unpkg.com/@modelcontextprotocol/ext-apps@1.3.2/app-with-deps";
+
+    const $ = (sel) => document.querySelector(sel);
+
+    const statusEl = $("#status");
+    const loadingEl = $("#loading");
+    const propertyDataEl = $("#propertyData");
+    const descriptionsEl = $("#descriptions");
+
+    const setStatus = (s) => { statusEl.textContent = s; };
+    const showLoading = () => { loadingEl.style.display = "block"; };
+    const hideLoading = () => { loadingEl.style.display = "none"; };
+
+    const escapeHtml = (value) => {
+      if (value === null || value === undefined) return "";
+      return String(value)
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+    };
+
+    const copyToClipboard = async (text) => {
+      try {
+        await navigator.clipboard.writeText(text);
+      } catch (e) {
+        const ta = document.createElement("textarea");
+        ta.value = text;
+        document.body.appendChild(ta);
+        ta.select();
+        document.execCommand("copy");
+        ta.remove();
+      }
+    };
+
+    const section = ({ title, copyText, bodyHtml }) => {
+      const wrapper = document.createElement("div");
+      wrapper.className = "section";
+
+      const header = document.createElement("div");
+      header.className = "section-header";
+
+      const t = document.createElement("div");
+      t.className = "section-title";
+      t.textContent = title;
+
+      const btn = document.createElement("button");
+      btn.className = "btn";
+      btn.type = "button";
+      btn.textContent = "Copy";
+      btn.addEventListener("click", async () => {
+        await copyToClipboard(copyText || "");
+        btn.textContent = "Copied";
+        setTimeout(() => (btn.textContent = "Copy"), 900);
+      });
+
+      header.appendChild(t);
+      header.appendChild(btn);
+
+      const body = document.createElement("div");
+      body.innerHTML = bodyHtml;
+
+      wrapper.appendChild(header);
+      wrapper.appendChild(body);
+      return wrapper;
+    };
+
+    const renderPropertyData = (data) => {
+      propertyDataEl.innerHTML = "";
+
+      const cardWrap = document.createElement("div");
+      cardWrap.className = "grid";
+
+      const summaryCard = document.createElement("div");
+      summaryCard.className = "card";
+
+      const h2 = document.createElement("h2");
+      h2.textContent = "Market Summary";
+      summaryCard.appendChild(h2);
+
+      const kv = document.createElement("div");
+      kv.className = "kv";
+
+      const addKV = (k, v) => {
+        const ke = document.createElement("div");
+        ke.className = "k";
+        ke.textContent = k;
+        const ve = document.createElement("div");
+        ve.textContent = v ?? "";
+        kv.appendChild(ke);
+        kv.appendChild(ve);
+      };
+
+      addKV("Address", data?.subject?.address || data?.address || "");
+      addKV("Postcode", data?.subject?.postcode || data?.postcode || "");
+      addKV("Bedrooms", data?.subject?.bedrooms ?? "");
+      addKV("Type", data?.subject?.property_type || "");
+      addKV("Asking price", data?.subject?.price ? `£${Number(data.subject.price).toLocaleString()}` : "");
+      addKV("EPC", data?.epc?.rating || data?.epc?.current_energy_rating || "");
+      addKV("Price position", data?.analysis?.price_position || "");
+      addKV("Estimated range", data?.analysis?.estimated_value_range || "");
+
+      summaryCard.appendChild(kv);
+
+      const compsCard = document.createElement("div");
+      compsCard.className = "card";
+      const hc = document.createElement("h2");
+      hc.textContent = "Comparable Sales";
+      compsCard.appendChild(hc);
+
+      const compMeta = document.createElement("div");
+      compMeta.className = "small";
+      compMeta.textContent = data?.comps?.summary || "";
+      compsCard.appendChild(compMeta);
+
+      const comps = data?.comps?.top || [];
+      if (comps.length) {
+        const list = document.createElement("ul");
+        for (const c of comps) {
+          const li = document.createElement("li");
+          const price = c?.price ? `£${Number(c.price).toLocaleString()}` : "";
+          const date = c?.date || "";
+          const addr = c?.address || "";
+          const pt = c?.property_type || "";
+          li.textContent = `${addr} — ${price}${date ? ` (${date})` : ""}${pt ? ` — ${pt}` : ""}`;
+          list.appendChild(li);
+        }
+        compsCard.appendChild(list);
+      } else {
+        const none = document.createElement("div");
+        none.className = "small muted";
+        none.textContent = "No comparable transactions returned.";
+        compsCard.appendChild(none);
+      }
+
+      const listingsCard = document.createElement("div");
+      listingsCard.className = "card";
+      const hl = document.createElement("h2");
+      hl.textContent = "Current Listings";
+      listingsCard.appendChild(hl);
+      const lmeta = document.createElement("div");
+      lmeta.className = "small";
+      lmeta.textContent = data?.listings?.summary || "";
+      listingsCard.appendChild(lmeta);
+
+      const locCard = document.createElement("div");
+      locCard.className = "card";
+      const hlo = document.createElement("h2");
+      hlo.textContent = "Location";
+      locCard.appendChild(hlo);
+      const lkv = document.createElement("div");
+      lkv.className = "kv";
+      const addL = (k, v) => {
+        const ke = document.createElement("div");
+        ke.className = "k";
+        ke.textContent = k;
+        const ve = document.createElement("div");
+        ve.textContent = v ?? "";
+        lkv.appendChild(ke);
+        lkv.appendChild(ve);
+      };
+      addL("District", data?.location?.admin_district || "");
+      addL("Region", data?.location?.region || "");
+      addL("Ward", data?.location?.admin_ward || "");
+      addL("Country", data?.location?.country || "");
+      addL("Urban/Rural", data?.location?.rural_urban || data?.location?.rural_urban_classification || "");
+      locCard.appendChild(lkv);
+
+      cardWrap.appendChild(summaryCard);
+      cardWrap.appendChild(compsCard);
+      cardWrap.appendChild(listingsCard);
+      cardWrap.appendChild(locCard);
+
+      propertyDataEl.appendChild(cardWrap);
+    };
+
+    const renderDescriptions = (data) => {
+      descriptionsEl.innerHTML = "";
+
+      const variants = [
+        { key: "professional", label: "Professional" },
+        { key: "luxury", label: "Luxury" },
+        { key: "family", label: "Family-friendly" },
+      ];
+
+      const state = { active: "professional" };
+
+      const tabs = document.createElement("div");
+      tabs.className = "tabs";
+
+      const panel = document.createElement("div");
+
+      const renderVariant = () => {
+        panel.innerHTML = "";
+        const v = data?.variants?.[state.active] || {};
+
+        panel.appendChild(section({
+          title: `${variants.find(x => x.key === state.active)?.label || ""} headline`,
+          copyText: v.headline || "",
+          bodyHtml: `<div class="text">${escapeHtml(v.headline || "")}</div>`,
+        }));
+
+        panel.appendChild(section({
+          title: `${variants.find(x => x.key === state.active)?.label || ""} description`,
+          copyText: v.description || "",
+          bodyHtml: `<div class="text">${escapeHtml(v.description || "")}</div>`,
+        }));
+
+        const features = Array.isArray(v.features) ? v.features : [];
+        panel.appendChild(section({
+          title: `${variants.find(x => x.key === state.active)?.label || ""} features`,
+          copyText: features.join("\n"),
+          bodyHtml: features.length ? `<ul>${features.map(f => `<li>${escapeHtml(f)}</li>`).join("")}</ul>` : `<div class="small muted">No features provided.</div>`,
+        }));
+      };
+
+      for (const v of variants) {
+        const b = document.createElement("button");
+        b.className = "tab";
+        b.type = "button";
+        b.textContent = v.label;
+        b.setAttribute("aria-selected", v.key === state.active ? "true" : "false");
+        b.addEventListener("click", () => {
+          state.active = v.key;
+          for (const child of tabs.querySelectorAll(".tab")) {
+            child.setAttribute("aria-selected", child.textContent === v.label ? "true" : "false");
+          }
+          renderVariant();
+        });
+        tabs.appendChild(b);
+      }
+
+      const portal = data?.portal || {};
+
+      const portalBlock = document.createElement("div");
+      portalBlock.appendChild(section({
+        title: `Rightmove summary${portal?.rightmove_summary ? ` ` : ""}`,
+        copyText: portal?.rightmove_summary || "",
+        bodyHtml: `<div class="text">${escapeHtml(portal?.rightmove_summary || "")}</div><div class="small">${(portal?.rightmove_summary || "").length} chars</div>`,
+      }));
+      portalBlock.appendChild(section({
+        title: "Social caption",
+        copyText: portal?.social_caption || "",
+        bodyHtml: `<div class="text">${escapeHtml(portal?.social_caption || "")}</div>`,
+      }));
+      portalBlock.appendChild(section({
+        title: `Email subject`,
+        copyText: portal?.email_subject || "",
+        bodyHtml: `<div class="text">${escapeHtml(portal?.email_subject || "")}</div><div class="small">${(portal?.email_subject || "").length} chars</div>`,
+      }));
+
+      const pfeatures = Array.isArray(portal?.features) ? portal.features : [];
+      portalBlock.appendChild(section({
+        title: "Portal bullet points",
+        copyText: pfeatures.join("\n"),
+        bodyHtml: pfeatures.length ? `<ul>${pfeatures.map(f => `<li>${escapeHtml(f)}</li>`).join("")}</ul>` : `<div class="small muted">No portal bullet points provided.</div>`,
+      }));
+
+      const header = document.createElement("div");
+      header.className = "card";
+      const h2 = document.createElement("h2");
+      h2.textContent = "Descriptions";
+      header.appendChild(h2);
+      const meta = document.createElement("div");
+      meta.className = "small";
+      meta.textContent = `${data?.address || ""}${data?.postcode ? ` • ${data.postcode}` : ""}`;
+      header.appendChild(meta);
+
+      descriptionsEl.appendChild(header);
+      descriptionsEl.appendChild(tabs);
+      descriptionsEl.appendChild(panel);
+
+      const portalHeader = document.createElement("div");
+      portalHeader.className = "card";
+      const ph2 = document.createElement("h2");
+      ph2.textContent = "Portal Formats";
+      portalHeader.appendChild(ph2);
+      descriptionsEl.appendChild(portalHeader);
+      descriptionsEl.appendChild(portalBlock);
+
+      renderVariant();
+    };
+
+    const app = new App({ name: "Property Descriptions", version: "1.0.0" });
+
+    app.ontoolinput = () => {
+      setStatus("Tool running…");
+      showLoading();
+    };
+
+    app.ontoolresult = (result) => {
+      hideLoading();
+      setStatus("Tool result received");
+      const data = result?.structuredContent || result;
+      if (data?.kind === "property_data") renderPropertyData(data);
+      if (data?.kind === "descriptions") renderDescriptions(data);
+    };
+
+    app.onhostcontextchanged = (ctx) => {
+      if (ctx?.theme) applyDocumentTheme(ctx.theme);
+      if (ctx?.styles?.variables) applyHostStyleVariables(ctx.styles.variables);
+      if (ctx?.styles?.css?.fonts) applyHostFonts(ctx.styles.css.fonts);
+    };
+
+    app.onteardown = async () => ({});
+
+    await app.connect();
+  </script>
+</body>
+</html>
