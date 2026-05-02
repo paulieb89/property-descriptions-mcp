@@ -4,8 +4,10 @@ from pathlib import Path
 from typing import Any
 
 import anyio
+import httpx
 from fastmcp import FastMCP
-from fastmcp.server.apps import AppConfig, ResourceCSP
+from fastmcp.utilities.types import Image
+from fastmcp.apps import AppConfig, ResourceCSP
 from fastmcp.tools.tool import ToolResult
 from mcp.types import TextContent
 
@@ -27,6 +29,7 @@ PPD_TIMEOUT_S = float(os.environ.get("PPD_TIMEOUT_S", "4"))
 EPC_TIMEOUT_S = float(os.environ.get("EPC_TIMEOUT_S", "4"))
 POSTCODE_TIMEOUT_S = float(os.environ.get("POSTCODE_TIMEOUT_S", "3"))
 RIGHTMOVE_TIMEOUT_S = float(os.environ.get("RIGHTMOVE_TIMEOUT_S", "4"))
+IMAGE_TIMEOUT_S = float(os.environ.get("IMAGE_TIMEOUT_S", "5"))
 
 from starlette.requests import Request
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse
@@ -331,19 +334,69 @@ async def get_property_data(
     )
 
 
-@mcp.tool()
-async def get_listing_detail(property_url_or_id: str) -> dict:
-    """Get full details of a Rightmove listing.
+async def _fetch_images(
+    urls: list[str],
+    max_images: int,
+    offset: int,
+    timeout_s: float,
+) -> list[Image]:
+    slice_ = urls[offset : offset + max_images]
+    images = []
+    async with httpx.AsyncClient(timeout=timeout_s, follow_redirects=True) as client:
+        for url in slice_:
+            try:
+                r = await client.get(url)
+                r.raise_for_status()
+                fmt = "jpeg" if "jpeg" in r.headers.get("content-type", "") else "png"
+                images.append(Image(data=r.content, format=fmt))
+            except Exception:
+                pass
+    return images
 
-    Returns the existing description, images, key features, floor plans,
-    and agent info. Use to improve on existing copy or reference images.
+
+@mcp.tool()
+async def get_listing_detail(
+    property_url_or_id: str,
+    max_images: int = 8,
+    image_offset: int = 0,
+) -> ToolResult:
+    """Get full details of a Rightmove listing including property photos.
+
+    Returns the existing description, key features, agent info, and images.
+    Images are fetched from Rightmove CDN and returned as visual content so
+    you can see the property and write better-informed descriptions.
+
+    Use image_offset to paginate: if the listing has 12 images and you fetched
+    8, call again with image_offset=8 to get the remaining 4.
 
     Args:
         property_url_or_id: Rightmove property URL or numeric ID
+        max_images: Number of photos to fetch and return (default 8)
+        image_offset: Start index for pagination (default 0)
     """
 
-    listing = fetch_listing(property_url_or_id)
-    return _to_dict(listing)
+    listing = await _run_sync_with_timeout(fetch_listing, IMAGE_TIMEOUT_S, property_url_or_id)
+    listing_dict = _to_dict(listing)
+
+    image_urls: list[str] = listing_dict.get("images") or []
+    total_images = len(image_urls)
+
+    images = await _fetch_images(image_urls, max_images, image_offset, IMAGE_TIMEOUT_S)
+
+    summary = (
+        f"Listing {property_url_or_id}. "
+        f"Images: {len(images)} fetched (offset {image_offset}, {total_images} total)."
+    )
+
+    return ToolResult(
+        content=[TextContent(type="text", text=summary), *[img.to_image_content() for img in images]],
+        structured_content={
+            **listing_dict,
+            "images_total": total_images,
+            "images_fetched": len(images),
+            "images_offset": image_offset,
+        },
+    )
 
 
 @mcp.tool(app=AppConfig(resource_uri=RESOURCE_URI))
