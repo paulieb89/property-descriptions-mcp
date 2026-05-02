@@ -9,6 +9,7 @@ The AI writes copy in three tones with portal-ready formats.
 This tool connects to Claude, ChatGPT, or any AI assistant that supports MCP.
 You provide a property address. The AI fetches real market data and writes:
 
+- **Property photos**: AI sees the actual listing images to describe rooms accurately
 - **Three copy variants**: Professional, Luxury, Family-friendly
 - **Rightmove summary**: Under 300 characters, portal-ready
 - **Social media caption**: Instagram/Facebook ready
@@ -35,7 +36,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
         "mcpServers": {
             "property-descriptions": {
                 "command": "uv",
-                "args": ["run", "--with", "fastmcp>=3.1.0", "--with", "property-shared>=1.4.0",
+                "args": ["run", "--with", "fastmcp>=3.2.4", "--with", "property-shared>=1.6.1",
                          "fastmcp", "run", "src/property_descriptions_mcp/server.py"]
             }
         }
