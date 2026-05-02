@@ -1,0 +1,11 @@
+.git
+.venv
+.github
+__pycache__
+*.pyc
+*.egg-info
+.env
+.env.*
+uv.lock
+CLAUDE.md
+README.md
