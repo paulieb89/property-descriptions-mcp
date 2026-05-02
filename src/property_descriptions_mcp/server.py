@@ -3,6 +3,7 @@ import json
 from pathlib import Path
 from typing import Any
 
+import anyio
 from fastmcp import FastMCP
 from fastmcp.server.apps import AppConfig, ResourceCSP
 from fastmcp.tools.tool import ToolResult
@@ -20,6 +21,12 @@ from property_core import (
     classify_price_position,
     estimate_value_range,
 )
+
+
+PPD_TIMEOUT_S = float(os.environ.get("PPD_TIMEOUT_S", "4"))
+EPC_TIMEOUT_S = float(os.environ.get("EPC_TIMEOUT_S", "4"))
+POSTCODE_TIMEOUT_S = float(os.environ.get("POSTCODE_TIMEOUT_S", "3"))
+RIGHTMOVE_TIMEOUT_S = float(os.environ.get("RIGHTMOVE_TIMEOUT_S", "4"))
 
 from starlette.requests import Request
 from starlette.responses import FileResponse, HTMLResponse, JSONResponse
@@ -69,6 +76,11 @@ def _to_dict(obj: Any) -> Any:
         return _to_dict(dict_method())
 
     return str(obj)
+
+
+async def _run_sync_with_timeout(fn, timeout_s: float, *args, **kwargs):
+    with anyio.fail_after(timeout_s):
+        return await anyio.to_thread.run_sync(lambda: fn(*args, **kwargs))
 
 
 def _compact_comps(comps: Any, limit: int = 10) -> list[dict]:
@@ -148,12 +160,16 @@ async def get_property_data(
 
     comps_raw = None
     try:
-        comps_raw = PPDService().comps(
+        comps_raw = await _run_sync_with_timeout(
+            PPDService().comps,
+            PPD_TIMEOUT_S,
             postcode=postcode,
             property_type=property_type,
             months=24,
             address=address,
         )
+    except TimeoutError:
+        errors["ppd_comps"] = f"timed out after {PPD_TIMEOUT_S}s"
     except Exception as e:
         errors["ppd_comps"] = str(e)
 
@@ -170,7 +186,10 @@ async def get_property_data(
 
     epc_raw = None
     try:
-        epc_raw = await EPCClient().search_by_postcode(postcode, address=address)
+        with anyio.fail_after(EPC_TIMEOUT_S):
+            epc_raw = await EPCClient().search_by_postcode(postcode, address=address)
+    except TimeoutError:
+        errors["epc"] = f"timed out after {EPC_TIMEOUT_S}s"
     except Exception as e:
         errors["epc"] = str(e)
 
@@ -193,7 +212,10 @@ async def get_property_data(
 
     location_raw = None
     try:
-        location_raw = await PostcodeClient().lookup(postcode)
+        with anyio.fail_after(POSTCODE_TIMEOUT_S):
+            location_raw = await PostcodeClient().lookup(postcode)
+    except TimeoutError:
+        errors["postcode_lookup"] = f"timed out after {POSTCODE_TIMEOUT_S}s"
     except Exception as e:
         errors["postcode_lookup"] = str(e)
 
@@ -228,7 +250,7 @@ async def get_property_data(
         except TypeError:
             search_url = api.build_search_url(postcode=postcode, radius=0.25)
 
-        fetched = fetch_listings(search_url)
+        fetched = await _run_sync_with_timeout(fetch_listings, RIGHTMOVE_TIMEOUT_S, search_url)
         fetched_d = _to_dict(fetched)
 
         results = []
@@ -257,6 +279,8 @@ async def get_property_data(
             "count": len(results),
             "summary": listings_summary,
         }
+    except TimeoutError:
+        errors["rightmove"] = f"timed out after {RIGHTMOVE_TIMEOUT_S}s"
     except Exception as e:
         errors["rightmove"] = str(e)
 
