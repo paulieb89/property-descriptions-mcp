@@ -5,7 +5,7 @@ description = "MCP server for UK property listing descriptions"
 requires-python = ">=3.11"
 dependencies = [
     "fastmcp>=3.2.4",
-    "property-shared>=1.4.0",
+    "property-shared>=1.6.1",
     "httpx",
     "uvicorn[standard]",
 ]
