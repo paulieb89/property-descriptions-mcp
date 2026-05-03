@@ -209,12 +209,13 @@
     <div class="hero">
       <h1>Listing descriptions grounded in real market data.</h1>
       <p>
-        This MCP server gives your AI assistant comparable sales, EPC info, current listings,
-        and location context for any UK postcode — then generates three tone variants and
-        portal-ready formats.
+        This MCP server gives your AI assistant comparable sales, EPC data, current listings,
+        location context, and property photos for any UK address — then generates three tone
+        variants and portal-ready formats, all grounded in real market data.
       </p>
       <div class="cta-row">
         <a class="btn primary" href="#early">Get early access</a>
+        <a class="btn" href="https://bouch.dev/products/property-descriptions-mcp">Setup instructions</a>
         <a class="btn" href="/mcp">Connect via MCP at /mcp</a>
       </div>
     </div>
@@ -238,15 +239,15 @@
       <div class="steps">
         <div class="step">
           <div class="label">Step 1</div>
-          Provide an address + postcode (and price/bedrooms if known).
+          Provide an address and postcode. Optionally paste a Rightmove URL to pull in the listing's photos.
         </div>
         <div class="step">
           <div class="label">Step 2</div>
-          Your AI calls tools to fetch comps, EPC, listings, and location context.
+          Your AI fetches comparable sales, EPC rating, current listings, and location context — and reads the property images to describe rooms accurately.
         </div>
         <div class="step">
           <div class="label">Step 3</div>
-          You get three description variants + portal formats ready to paste.
+          Receive three description variants (Professional, Luxury, Family-friendly) plus portal-ready formats: Rightmove summary, social caption, email subject, and feature bullets.
         </div>
       </div>
     </section>
@@ -254,54 +255,62 @@
     <section id="sample">
       <h2>Sample output</h2>
       <div class="card">
-        <div class="label">Example property (placeholder — replace with your real samples)</div>
-        <div class="sample"><strong>ADDRESS:</strong> [Your sample address]
-<strong>POSTCODE:</strong> [Your sample postcode]
-<strong>DETAILS:</strong> [Bedrooms + type] • £[Asking price]
-
-<strong>Professional</strong>
-Headline: [Professional headline]
-Description: [150–200 words]
+        <div class="label">14 Ashfield Road, Nottingham NG2 7PP — 3-bed semi-detached • £245,000</div>
+        <div class="sample"><strong>Professional</strong>
+Headline: A well-positioned three-bedroom semi in a settled NG2 street
+Description: 14 Ashfield Road sits in a quiet residential pocket of West Bridgford, within easy reach of the Trent embankment and the cafés and independents of Bridgford Road. Comparable sales on nearby streets over the past two years range between £230,000 and £258,000, placing the asking price squarely in line with recent evidence. The property holds an EPC rating of C, offering a practical baseline for buyers comparing running costs across similar stock. Accommodation across two floors comprises a front reception, separate dining room, and a rear kitchen opening to a lawned garden, with three bedrooms and a family bathroom above. Off-street parking to the front. A sensible choice for buyers seeking established value in one of Nottingham's most consistently performing postcodes.
 Features:
-- [Feature]
-- [Feature]
+- Three bedrooms across two floors
+- EPC rating C — efficient for the period
+- Asking price in line with recent comparable sales
+- Rear garden with lawn and patio
+- Off-street parking
+- Quiet residential street, NG2 7PP
 
 <strong>Luxury</strong>
-Headline: [Luxury headline]
-Description: [150–200 words]
+Headline: Refined living in sought-after West Bridgford
+Description: Set on one of West Bridgford's quieter residential streets, 14 Ashfield Road presents a generous three-bedroom semi-detached home with an outlook that is unhurried and leafy. The ground floor flows from a bright front reception through to a formal dining space and a kitchen that opens directly onto the garden — an arrangement that suits both everyday living and easy entertaining. Upstairs, three well-proportioned bedrooms share a family bathroom. The rear garden is lawned with a paved terrace ideal for summer evenings. Comparable transactions in the immediate area confirm strong and stable values, while an EPC C rating adds confidence on running costs. West Bridgford's riverside walks, outstanding schools, and independent dining scene are all within comfortable reach.
 Features:
-- [Feature]
-- [Feature]
+- Generous three-bedroom semi-detached
+- Bright front reception and formal dining room
+- Garden with terrace — suited to entertaining
+- Off-street parking
+- EPC C — strong efficiency for the build period
+- West Bridgford: riverside walks, top-rated schools nearby
 
 <strong>Family-friendly</strong>
-Headline: [Family headline]
-Description: [150–200 words]
+Headline: Room to grow in West Bridgford — schools, parks, and space
+Description: Families searching NG2 will know how quickly good stock moves, and 14 Ashfield Road ticks the practical boxes from the outset. Three proper bedrooms — not two-and-a-box-room — sit above a layout that keeps living and dining separate, handy when homework and dinner happen at the same time. The kitchen opens onto a lawned rear garden with room for a trampoline and still space to sit. Off-street parking out front takes the stress out of school-run mornings. West Bridgford's catchment for well-regarded primary and secondary schools is a known draw, and the neighbourhood's parks and riverside paths make weekends easy. Comparable sales evidence shows prices holding steadily in the low-to-mid £240,000s for similar homes, and an EPC rating of C keeps the monthly bills manageable.
 Features:
-- [Feature]
-- [Feature]
+- Three full bedrooms — room for a growing family
+- Separate reception and dining room
+- Lawned rear garden with patio
+- Off-street parking — school runs made easier
+- Within catchment for well-regarded local schools
+- EPC C rating — efficient and cost-conscious
 
 <strong>Portal formats</strong>
-Rightmove summary (≤300 chars): [Summary]
-Social caption: [Caption]
-Email subject (≤60 chars): [Subject]
+Rightmove summary: 3-bed semi in West Bridgford's NG2 7PP. Comparable sales confirm strong local values. EPC C. Rear garden, off-street parking, and easy reach of top-rated schools.
+Social caption: Three bedrooms, a lawned garden, and a postcode that sells itself. 14 Ashfield Road, West Bridgford — now on the market.
+Email subject: New to market: 3-bed semi, West Bridgford NG2
 Portal bullet points:
-- [Bullet]
-- [Bullet]</div>
+- Three bedrooms
+- Separate reception and dining room
+- Kitchen with direct garden access
+- Lawned rear garden with patio
+- Off-street parking
+- EPC rating C
+- NG2 7PP — comparable sales in the low-to-mid £240,000s
+- Close to West Bridgford's schools, parks, and independent shops</div>
       </div>
-    </section>
-
-    <section id="video">
-      <h2>Video</h2>
-      <div class="card muted">Loom embed placeholder — add your recording when ready.</div>
     </section>
 
     <section id="early">
       <h2>Get early access</h2>
-      <p class="muted">Google Form integration included with placeholders. Replace FORM_ID and entry.FIELD_N when ready.</p>
-      <form action="https://docs.google.com/forms/d/e/FORM_ID/formResponse" method="POST" target="hidden_iframe">
-        <input name="entry.FIELD_1" type="text" placeholder="Your name" required>
-        <input name="entry.FIELD_2" type="email" placeholder="Email address" required>
-        <input name="entry.FIELD_3" type="text" placeholder="Agency name (optional)">
+      <form action="https://docs.google.com/forms/d/e/1FAIpQLScD3sVY49lt6VwIb-wVeK_JKOe1UIW_4c1nDEt1IU-2kay7qA/formResponse" method="POST" target="hidden_iframe">
+        <input name="entry.2102699969" type="text" placeholder="Your name" required>
+        <input name="entry.1372819303" type="email" placeholder="Email address" required>
+        <input name="entry.1377821751" type="text" placeholder="Agency name (optional)">
         <button type="submit">Get early access</button>
       </form>
       <iframe name="hidden_iframe" style="display:none;"></iframe>
