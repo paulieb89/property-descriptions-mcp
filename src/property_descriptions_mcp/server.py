@@ -514,6 +514,19 @@ async def health(request: Request):
     return JSONResponse({"status": "ok"})
 
 
+@mcp.custom_route("/.well-known/glama.json", methods=["GET"])
+async def glama_connector_manifest(request: Request) -> JSONResponse:
+    return JSONResponse({
+        "$schema": "https://glama.ai/mcp/schemas/connector.json",
+        "maintainers": [{"email": "paul@bouch.dev"}],
+    })
+
+
+@mcp.custom_route("/.well-known/mcp/server-card.json", methods=["GET"])
+async def server_card(request: Request) -> JSONResponse:
+    return JSONResponse({"serverInfo": {"name": "property-descriptions-mcp", "version": "0.2.1"}})
+
+
 def main():
     import sys
 
