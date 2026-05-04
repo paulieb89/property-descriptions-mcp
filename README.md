@@ -5,7 +5,6 @@
 UK property listing description generator. Give an AI assistant a postcode or address — it fetches comparable sales, EPC ratings, and Rightmove listings, then writes three copy variants ready for Rightmove, social media, and email.
 
 [![PyPI](https://img.shields.io/pypi/v/property-descriptions-mcp)](https://pypi.org/project/property-descriptions-mcp/)
-[![Glama](https://img.shields.io/badge/Glama-listed-orange?style=flat-square)](https://glama.ai/mcp/servers/paulieb89/property-descriptions-mcp)
 [![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=property-descriptions&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fproperty-descriptions-mcp.fly.dev%2Fmcp%22%7D)
 [![Install in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Install_Server-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=property-descriptions&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fproperty-descriptions-mcp.fly.dev%2Fmcp%22%7D&quality=insiders)
 [![Install in Cursor](https://img.shields.io/badge/Cursor-Install_Server-000000?style=flat-square&logoColor=white)](https://cursor.com/en/install-mcp?name=property-descriptions&config=eyJ0eXBlIjoiaHR0cCIsInVybCI6Imh0dHBzOi8vcHJvcGVydHktZGVzY3JpcHRpb25zLW1jcC5mbHkuZGV2L21jcCJ9)
