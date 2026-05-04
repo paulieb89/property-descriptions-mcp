@@ -16,7 +16,7 @@ You provide a property address. The AI fetches real market data and writes:
 - **Email subject line**: Under 60 characters
 - **Key feature bullets**: 8-10 points for portal listings
 
-Try the demo: https://bouch-property-descriptions-mcp.fly.dev/
+Try the demo: https://property-descriptions-mcp.fly.dev/
 
 ## For Developers
 

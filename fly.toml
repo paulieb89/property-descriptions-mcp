@@ -1,4 +1,4 @@
-app = "bouch-property-descriptions-mcp"
+app = "property-descriptions-mcp"
 primary_region = "lhr"
 
 [build]
