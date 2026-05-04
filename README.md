@@ -1,58 +1,85 @@
-# Property Description Generator
+<!-- mcp-name: io.github.paulieb89/property-descriptions-mcp -->
 
-MCP server that gives AI assistants the data to write property listing descriptions.
-Upload a postcode. Get comparable sales, EPC ratings, and local market context.
-The AI writes copy in three tones with portal-ready formats.
+# property-descriptions-mcp
 
-## For Estate Agents
+UK property listing description generator. Give an AI assistant a postcode or address — it fetches comparable sales, EPC ratings, and Rightmove listings, then writes three copy variants ready for Rightmove, social media, and email.
 
-This tool connects to Claude, ChatGPT, or any AI assistant that supports MCP.
-You provide a property address. The AI fetches real market data and writes:
+[![PyPI](https://img.shields.io/pypi/v/property-descriptions-mcp)](https://pypi.org/project/property-descriptions-mcp/)
+[![Glama](https://img.shields.io/badge/Glama-listed-orange?style=flat-square)](https://glama.ai/mcp/servers/paulieb89/property-descriptions-mcp)
+[![Install in VS Code](https://img.shields.io/badge/VS_Code-Install_Server-0098FF?style=flat-square&logo=visualstudiocode&logoColor=white)](https://vscode.dev/redirect/mcp/install?name=property-descriptions&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fproperty-descriptions-mcp.fly.dev%2Fmcp%22%7D)
+[![Install in VS Code Insiders](https://img.shields.io/badge/VS_Code_Insiders-Install_Server-24bfa5?style=flat-square&logo=visualstudiocode&logoColor=white)](https://insiders.vscode.dev/redirect/mcp/install?name=property-descriptions&config=%7B%22type%22%3A%22http%22%2C%22url%22%3A%22https%3A%2F%2Fproperty-descriptions-mcp.fly.dev%2Fmcp%22%7D&quality=insiders)
+[![Install in Cursor](https://img.shields.io/badge/Cursor-Install_Server-000000?style=flat-square&logoColor=white)](https://cursor.com/en/install-mcp?name=property-descriptions&config=eyJ0eXBlIjoiaHR0cCIsInVybCI6Imh0dHBzOi8vcHJvcGVydHktZGVzY3JpcHRpb25zLW1jcC5mbHkuZGV2L21jcCJ9)
 
-- **Property photos**: AI sees the actual listing images to describe rooms accurately
-- **Three copy variants**: Professional, Luxury, Family-friendly
-- **Rightmove summary**: Under 300 characters, portal-ready
-- **Social media caption**: Instagram/Facebook ready
-- **Email subject line**: Under 60 characters
-- **Key feature bullets**: 8-10 points for portal listings
+---
 
-Try the demo: https://property-descriptions-mcp.fly.dev/
+## Data Sources
 
-## For Developers
+| Source | API | Auth |
+|--------|-----|------|
+| Land Registry (PPD) | `landregistry.data.gov.uk` SPARQL | None |
+| EPC Register | `epc.opendatacommunities.org` | API key (optional — degrades gracefully) |
+| Rightmove | rightmove.co.uk (scraping, polite) | None |
+| postcodes.io | `api.postcodes.io` | None |
 
-### Run Locally
+---
 
-    git clone [repo]
-    cd property-descriptions-mcp
-    uv sync
-    uv run property-descriptions          # HTTP on :8080
-    uv run property-descriptions --stdio  # For Claude Desktop
+## Tools
 
-### Connect to Claude Desktop
+| Tool | Description |
+|------|-------------|
+| `get_property_data` | Fetch comparable sales, EPC data, and Rightmove listings for a postcode or address |
+| `get_listing_detail` | Full Rightmove listing detail including photos, by URL or listing ID |
+| `format_for_portals` | Format property data into portal-ready copy variants |
 
-Add to `~/Library/Application Support/Claude/claude_desktop_config.json`:
+---
 
-    {
-        "mcpServers": {
-            "property-descriptions": {
-                "command": "uv",
-                "args": ["run", "--with", "fastmcp>=3.2.4", "--with", "property-shared>=1.6.1",
-                         "fastmcp", "run", "src/property_descriptions_mcp/server.py"]
-            }
-        }
+## Connect
+
+### Hosted (no install)
+
+```json
+{
+  "mcpServers": {
+    "property-descriptions": {
+      "type": "http",
+      "url": "https://property-descriptions-mcp.fly.dev/mcp"
     }
+  }
+}
+```
 
-### Connect to Claude Code
+### Local (uvx)
 
-    claude mcp add property-descriptions -- uv run --with fastmcp --with property-shared fastmcp run src/property_descriptions_mcp/server.py
+```json
+{
+  "mcpServers": {
+    "property-descriptions": {
+      "type": "stdio",
+      "command": "uvx",
+      "args": ["property-descriptions-mcp"]
+    }
+  }
+}
+```
 
-### Deploy
+EPC credentials are optional — the server degrades gracefully without them. If you want full EPC data:
 
-    fly deploy
+| Key | Where to get it |
+|-----|----------------|
+| `EPC_API_EMAIL` / `EPC_API_KEY` | [epc.opendatacommunities.org](https://epc.opendatacommunities.org) — free registration |
 
-### Environment
+---
 
-    EPC_API_EMAIL    # Optional: EPC Register credentials
-    EPC_API_KEY      # Optional: degrades gracefully without
+## Demo
 
-No OpenAI key required. The AI is external — this is just the data layer.
+```
+Write a property listing for 14 Acacia Avenue, NG5 3AA — 3-bed semi, asking £250,000
+```
+
+The agent calls `get_property_data` to pull recent sales and EPC data, then writes three copy variants (professional, luxury, family), a Rightmove summary under 300 characters, a social caption, and eight feature bullets.
+
+---
+
+## Licence
+
+MIT
