@@ -23,10 +23,10 @@ Tool layer only. No internal AI agents. No pydantic-ai. No nested LLM calls.
 ## Commands
 
     # Run locally (stdio for Claude Desktop)
-    uv run property-descriptions --stdio
+    uv run --env-file .env property-descriptions --stdio
 
     # Run locally (HTTP for browser/remote clients)
-    uv run property-descriptions
+    uv run --env-file .env property-descriptions
 
     # Deploy
     fly deploy
@@ -44,9 +44,14 @@ Tool layer only. No internal AI agents. No pydantic-ai. No nested LLM calls.
 
 ## Environment
 
-    EPC_API_EMAIL    # Optional — EPC Register API
-    EPC_API_KEY      # Optional — degrades gracefully without
-    PORT             # HTTP port (default 8080)
+    EPC_API_EMAIL              # EPC Register API credential
+    EPC_API_KEY                # EPC Register API credential
+    COMPANIES_HOUSE_API_KEY    # Companies House API
+    PORT                       # HTTP port (default 8080)
+
+Secrets are stored in .env locally (gitignored) and as Fly secrets in production.
+Local: uv run --env-file .env ...
+Prod:  fly secrets set KEY=value --app property-descriptions-mcp
 
 No OpenAI key needed. No database. No Supabase.
 
