@@ -1,11 +1,11 @@
 [project]
 name = "property-descriptions-mcp"
-version = "0.2.2"
+version = "0.2.3"
 description = "MCP server for UK property listing descriptions"
 requires-python = ">=3.11"
 dependencies = [
     "fastmcp>=3.2.4",
-    "property-shared>=1.6.1",
+    "property-shared>=1.10.0",
     "httpx",
     "uvicorn[standard]",
 ]
