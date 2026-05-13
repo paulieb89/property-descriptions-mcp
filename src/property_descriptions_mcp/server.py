@@ -61,18 +61,27 @@ Ground every claim in the data — name real streets, cite real comparable price
 
 
 def _to_dict(obj: Any) -> Any:
+    """Recursively convert Pydantic models / nested structures to plain dicts.
+
+    Drops None-valued dict entries to keep MCP responses lean. property_core
+    Pydantic models declare many optional fields (EPC enrichment, escalation
+    metadata) that are always null in typical responses and waste LLM context.
+
+    The image-bytes vision flow in get_listing_detail is unaffected: the
+    `images` URL list is a populated list[str], not None.
+    """
     if obj is None:
         return None
     if isinstance(obj, (str, int, float, bool)):
         return obj
     if isinstance(obj, dict):
-        return {k: _to_dict(v) for k, v in obj.items()}
+        return {k: _to_dict(v) for k, v in obj.items() if v is not None}
     if isinstance(obj, list):
         return [_to_dict(v) for v in obj]
 
     model_dump = getattr(obj, "model_dump", None)
     if callable(model_dump):
-        return _to_dict(model_dump())
+        return _to_dict(model_dump(exclude_none=True))
 
     dict_method = getattr(obj, "dict", None)
     if callable(dict_method):
