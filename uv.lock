@@ -890,7 +890,7 @@ wheels = [
 
 [[package]]
 name = "property-descriptions-mcp"
-version = "0.2.3"
+version = "0.2.5"
 source = { editable = "." }
 dependencies = [
     { name = "fastmcp" },
@@ -908,7 +908,7 @@ dev = [
 requires-dist = [
     { name = "fastmcp", specifier = ">=3.2.4" },
     { name = "httpx" },
-    { name = "property-shared", specifier = ">=1.10.0" },
+    { name = "property-shared", specifier = ">=1.11.0" },
     { name = "uvicorn", extras = ["standard"] },
 ]
 
@@ -917,7 +917,7 @@ dev = [{ name = "tiktoken", specifier = ">=0.12.0" }]
 
 [[package]]
 name = "property-shared"
-version = "1.10.0"
+version = "1.11.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "beautifulsoup4" },
@@ -928,9 +928,9 @@ dependencies = [
     { name = "requests" },
     { name = "tenacity" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/8d/cf/4da78b85eecafb64a599d1f0f6a295526467ca21e86129afd3025bbc7878/property_shared-1.10.0.tar.gz", hash = "sha256:1885b6e0a33526ab2b89c0a54e79c76e00d510d6f9fb64f9f17c95da887eb7f2", size = 721894, upload-time = "2026-05-12T09:16:17.58Z" }
+sdist = { url = "https://files.pythonhosted.org/packages/a6/a9/c644f4272b1ddc02cc4c181638f7be36b7c6749b7d81a442705e21a70089/property_shared-1.11.0.tar.gz", hash = "sha256:eb9316b38111948c0ca68c466ff38d82cdc17d2f1295e68c463358b3b3455b22", size = 737908, upload-time = "2026-05-13T01:21:55.341Z" }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/4b/ea/5d7031a8bce2bd923c2df6a9a0aef05573c6e0de3ce36237ef35934be948/property_shared-1.10.0-py3-none-any.whl", hash = "sha256:b12e87b2ec3846dd8e71f58446dd877950ec824d423d1223b45ad7063faac97e", size = 148756, upload-time = "2026-05-12T09:16:16.233Z" },
+    { url = "https://files.pythonhosted.org/packages/d7/d3/bfee301c02d8a4ae65940a7e0bfc25c5ca8ead915807721aae7745c7e342/property_shared-1.11.0-py3-none-any.whl", hash = "sha256:1080e1389f6eff982c0f1e40c10b10fb48d778db600b1abb90875efdc83e44b3", size = 156636, upload-time = "2026-05-13T01:21:53.58Z" },
 ]
 
 [[package]]
