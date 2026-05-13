@@ -1,0 +1,19 @@
+version: 2
+updates:
+  - package-ecosystem: "pip"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+      day: "monday"
+    allow:
+      # Only auto-PR for property-shared (the upstream we care about).
+      # Other deps can still be bumped manually.
+      - dependency-name: "property-shared"
+    groups:
+      property-shared:
+        patterns:
+          - "property-shared"
+    commit-message:
+      prefix: "chore"
+      include: "scope"
+    open-pull-requests-limit: 3
