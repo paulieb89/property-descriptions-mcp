@@ -2,6 +2,8 @@
 
 # property-descriptions-mcp
 
+Maintained by BOUCH — private hosting, custom tools and setup: paul@bouch.dev · [bouch.dev/products/property-descriptions-mcp](https://bouch.dev/products/property-descriptions-mcp)
+
 UK property listing description generator. Give an AI assistant a postcode or address — it fetches comparable sales, EPC ratings, and Rightmove listings, then writes three copy variants ready for Rightmove, social media, and email.
 
 [![PyPI](https://img.shields.io/pypi/v/property-descriptions-mcp)](https://pypi.org/project/property-descriptions-mcp/)
